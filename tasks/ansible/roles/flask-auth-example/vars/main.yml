@@ -1,0 +1,57 @@
+---
+# vars file for flask-auth-example
+
+packages_map:
+  Debian:
+    - git
+    - curl
+    - ca-certificates
+    - ufw
+    - rsyslog
+  RedHat:
+    - git
+    - curl
+    - ca-certificates
+    - ufw
+    - rsyslog
+
+nginx_packages_map:
+  Debian:
+    - nginx
+    - python3
+    - python3-pip
+    - python3-venv
+    - python3-apt
+    - aptitude
+  RedHat:
+    - nginx
+    - python3
+    - python3-pip
+    - python3-virtualenv
+
+docker_packages_map:
+  Debian:
+    - lsb-release
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
+    - gnupg2
+    - dirmngr
+  RedHat:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
+    - yum-utils
+    - dnf-plugins-core
+    - device-mapper-persistent-data
+    - lvm2
+    - gnupg2
+
+allowed_ports:
+  - 22
+  - 80
+  - 443

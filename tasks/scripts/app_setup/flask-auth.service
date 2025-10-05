@@ -1,0 +1,20 @@
+[Unit]
+Description=Flask authentication app
+After=network.target
+
+[Service]
+User=devops
+
+WorkingDirectory=/home/devops/flask-app/flask-auth-example
+ExecStart=/home/devops/flask-app/flask-auth-example/start_flask_app.sh main.py
+
+Restart=always
+RestartSec=5
+
+# LogsDirectory=auth_server
+# LogsDirectoryMode=0755
+StandardOutput=append:/var/log/auth_server/auth_server_app.log
+StandardError=append:/var/log/auth_server/auth_server_app.log
+
+[Install]
+WantedBy=multi-user.target

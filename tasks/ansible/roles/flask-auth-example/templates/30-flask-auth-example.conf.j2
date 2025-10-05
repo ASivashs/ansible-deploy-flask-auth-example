@@ -1,0 +1,7 @@
+# /etc/rsyslog.d/30-flask-auth-example.conf
+template(name="AuthServerFormat" type="string" string="%timestamp:::date-rfc3339% %syslogseverity-text% %msg%\n")
+
+if ($programname == '{{ app_name }}' or $syslogtag contains '{{ app_name }}') then {
+    action(type="omfile" file="{{ log_dir }}/auth-server.log" template="AuthServerFormat")
+    stop
+}

@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+    app:
+        build: {{ app_path }}
+        container_name: {{ app_name }}
+        ports: 
+            - "5000:5000"
+        networks:
+            - auth_server_network
+        command: python3 -c 'from app import create_app; app = create_app(); app.run(host="0.0.0.0", port=5000)'
+
+    nginx:
+        image: nginx:1.29
+        container_name: nginx
+        ports:
+            - "80:80"
+        depends_on: 
+            - app
+        networks:
+            - auth_server_network
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+networks:
+    auth_server_network:
+        driver: bridge

@@ -1,0 +1,35 @@
+---
+# tasks file for flask-auth-example
+
+- name: Start system setup
+  ansible.builtin.import_tasks: setup_system.yml
+
+- name: Start application in a system
+  ansible.builtin.import_tasks: system_app.yml
+  when: not docker
+
+- name: Start application in Docker
+  ansible.builtin.import_tasks: docker_app.yml
+  when: docker
+
+- name: Enable UFW
+  ansible.builtin.systemd:
+    state: started
+    name: ufw
+  tags: firewall_setup
+
+- name: UFW setup
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop: "{{ allowed_ports }}"
+  become: true
+  tags: firewall_setup
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+    logging: true
+  become: true
+  tags: firewall_setup

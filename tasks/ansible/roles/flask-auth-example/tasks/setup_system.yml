@@ -1,0 +1,96 @@
+---
+
+# Installing required apps
+- name: setup_system | Update Debian local repos
+  ansible.builtin.apt:
+    update_cache: true
+    force: true
+  become: true
+  when: ansible_facts.os_family == 'Debian'
+  tags: package_installation
+
+- name: setup_system | Update Red Hat local repos
+  ansible.builtin.dnf:
+    update_cache: true
+    force: true
+  become: true
+  when: ansible_facts.os_family == 'RedHat'
+  tags: package_installation
+
+- name: setup_system | Install dependencies on Debian
+  ansible.builtin.apt:
+    name: "{{ packages_map[ansible_facts.os_family] }}"
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_facts.os_family == 'Debian'
+  tags: package_installation
+
+- name: setup_system | Install dependencies on Red Hat
+  ansible.builtin.dnf:
+    name: "{{ packages_map[ansible_facts.os_family] }}"
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_facts.os_family == 'RedHat'
+  tags: package_installation
+
+# Cloning app
+- name: Add safe directories to Git configuration
+  ansible.builtin.command:
+    cmd: "git config --global --add safe.directory {{ app_path }}"
+  become: true
+  tags: clone_app
+
+- name: setup_system | Clone app repo
+  ansible.builtin.git:
+    repo: "{{ repo }}"
+    dest: "{{ app_path }}"
+    version: "master"
+    clone: true
+    force: true
+  become: true
+  tags: clone_app
+
+- name: setup_system | Change permissions in app
+  ansible.builtin.file:
+    path: "{{ app_path }}"
+    owner: "{{ user }}"
+    group: "{{ user_group }}"
+    recurse: true
+  tags: clone_app
+
+# Set up scripts
+- name: setup_system | Create log directory
+  ansible.builtin.file:
+    path: "{{ log_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user_group }}"
+    state: directory
+    mode: "0755"
+  tags: monitoring
+
+- name: setup_system | Copying script from host
+  ansible.builtin.copy:
+    src: metrics.sh
+    dest: "{{ app_path }}"
+    owner: "root"
+    mode: "0755"
+  tags: monitoring
+
+- name: setup_system | Collecting base metrics about system
+  ansible.builtin.cron:
+    name: Collecting base metrics about system
+    user: "root"
+    state: "present"
+    minute: "*/5"
+    job: "/srv/metrics.sh"
+  tags: monitoring
+
+- name: setup_system | Config logrotate
+  ansible.builtin.template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/auth_server
+    owner: root
+    mode: "0755"
+  tags: monitoring

@@ -1,0 +1,2 @@
+*/5 * * * * /home/devops/flask-app/task/scripts/app_setup/check_app_server_availability.sh nginx flask-auth-example.service
+* */1 * * * /home/devops/flask-app/task/scripts/app_setup/db_backup.sh /home/devops/flask-app/flask-auth-example/instance/database.db var/backups/auth-server/

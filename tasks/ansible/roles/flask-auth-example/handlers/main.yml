@@ -1,0 +1,26 @@
+---
+# handlers file for flask-auth-example
+
+- name: handlers | main | Systemd daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: handlers | main | Restart app
+  ansible.builtin.systemd:
+    name: flask-auth-example
+    state: restarted
+
+- name: handlers | main | Restart nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: restarted
+
+- name: handlers | main | Restart rsyslog
+  ansible.builtin.systemd:
+    name: rsyslog
+    state: restarted
+
+- name: handlers | main | Restart docker
+  ansible.builtin.systemd:
+    name: docker
+    state: restarted

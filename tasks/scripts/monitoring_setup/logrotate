@@ -1,0 +1,8 @@
+/var/log/auth_server/*.log {
+  daily
+  rotate 7
+  compress
+  missingok
+  notifyempty
+  create 755 devops devops
+}

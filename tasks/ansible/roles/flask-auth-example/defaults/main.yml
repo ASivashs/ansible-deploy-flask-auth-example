@@ -1,0 +1,17 @@
+---
+# defaults file for flask-auth-example
+
+# User
+user: "devops"
+user_group: "devops"
+
+# App
+repo: "https://github.com/riad-azz/flask-auth-example"
+app_name: "flask-auth-example"
+app_path: "/srv"
+host_name: "test.local"
+
+# Path
+requirements_path: "{{ app_path }}/requirements.txt"
+venv_path: "{{ app_path }}/venv"
+log_dir: "/var/log/auth_server"
