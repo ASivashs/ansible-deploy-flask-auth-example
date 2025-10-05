@@ -16,6 +16,7 @@
   ansible.builtin.systemd:
     state: started
     name: ufw
+  when: ansible_facts.os_family == 'Debian'
   tags: firewall_setup
 
 - name: UFW setup
@@ -25,6 +26,7 @@
     proto: tcp
   loop: "{{ allowed_ports }}"
   become: true
+  when: ansible_facts.os_family == 'Debian'
   tags: firewall_setup
 
 - name: Enable UFW
@@ -32,4 +34,5 @@
     state: enabled
     logging: true
   become: true
+  when: ansible_facts.os_family == 'Debian'
   tags: firewall_setup

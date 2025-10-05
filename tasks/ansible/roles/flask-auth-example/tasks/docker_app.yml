@@ -5,7 +5,6 @@
   ansible.builtin.stat:
     path: /etc/apt/keyrings/docker.gpg
   register: docker_gpg
-  when: ansible_facts.os_family == 'Debian'
   tags: docker_installation
 
 - name: docker_app | Create APT keyring directory
@@ -24,8 +23,8 @@
     dest: "/tmp/docker.asc"
     mode: "0755"
   when:
-  - not docker_gpg.stat.exists
   - ansible_facts.os_family == 'Debian'
+  - not docker_gpg.stat.exists
   become: true
   tags: docker_installation
 
@@ -75,19 +74,19 @@
   when: ansible_facts.os_family == 'RedHat'
   tags: docker_installation
 
-- name: Add Docker yum/dnf repository
+- name: docker_app | Add Docker yum/dnf repository
   ansible.builtin.yum_repository:
     name: docker
     description: Docker CE Repository
     baseurl: "https://download.docker.com/linux/rhel/10/x86_64/stable"
-    gpgcheck: yes
+    gpgcheck: true
     gpgkey: "https://download.docker.com/linux/rhel/gpg"
-    enabled: yes
+    enabled: true
   when: ansible_facts.os_family == 'RedHat'
   tags: docker_installation
 
-- name: Refresh package cache
-  package:
+- name: docker_app | Refresh package cache
+  ansible.builtin.package:
     name: "*"
     state: latest
   register: _refresh_pkg_cache
@@ -96,8 +95,8 @@
   when: ansible_facts.os_family == 'RedHat'
   tags: docker_installation
 
-- name: Install Docker packages
-  package:
+- name: docker_app | Install Docker packages
+  ansible.builtin.package:
     name: "{{ docker_packages_map[ansible_facts.os_family] }}"
     state: present
   notify: handlers | main | Restart docker

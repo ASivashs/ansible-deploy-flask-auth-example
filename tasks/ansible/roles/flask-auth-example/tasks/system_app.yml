@@ -12,7 +12,6 @@
 - name: system_app | Update Red Hat local repos
   ansible.builtin.dnf:
     update_cache: true
-    force: true
   become: true
   when: ansible_facts.os_family == 'RedHat'
   tags: package_installation
@@ -54,6 +53,7 @@
     virtualenv: "{{ venv_path }}"
     virtualenv_command: "python3 -m venv"
   tags: app_setup
+  become: true
 
 - name: system_app | Create app system service
   ansible.builtin.template:
@@ -92,22 +92,34 @@
     state: absent
   tags: nginx_setup
 
-- name: system_app | Copying nginx config in sites-available
+- name: system_app | Copying nginx config in sites-available (Debian-based)
   ansible.builtin.template:
     src: nginx.conf.j2
     dest: "/etc/nginx/sites-available/{{ app_name }}"
     owner: root
     mode: "0755"
   notify: handlers | main | Restart nginx
+  when: ansible_facts.os_family == 'Debian'
   tags: nginx_setup
 
-- name: system_app | Copying nginx config in sites-enabled
+- name: system_app | Copying nginx config in nginx config dir (Red Hat)
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: "/etc/nginx/conf.d/{{ app_name }}"
+    owner: root
+    mode: "0755"
+  notify: handlers | main | Restart nginx
+  when: ansible_facts.os_family == 'RedHat'
+  tags: nginx_setup
+
+- name: system_app | Copying nginx config in sites-enabled (Debian-based)
   ansible.builtin.template:
     src: nginx.conf.j2
     dest: "/etc/nginx/sites-enabled/{{ app_name }}"
     owner: root
     mode: "0755"
   notify: handlers | main | Restart nginx
+  when: ansible_facts.os_family == 'Debian'
   tags: nginx_setup
 
 - name: system_app | Enable nginx

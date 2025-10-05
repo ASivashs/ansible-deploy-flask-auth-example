@@ -12,7 +12,6 @@ packages_map:
     - git
     - curl
     - ca-certificates
-    - ufw
     - rsyslog
 
 nginx_packages_map:
@@ -26,8 +25,9 @@ nginx_packages_map:
   RedHat:
     - nginx
     - python3
+    - python3-libselinux
     - python3-pip
-    - python3-virtualenv
+    - python3-packaging
 
 docker_packages_map:
   Debian:

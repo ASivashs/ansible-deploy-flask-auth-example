@@ -12,7 +12,6 @@
 - name: setup_system | Update Red Hat local repos
   ansible.builtin.dnf:
     update_cache: true
-    force: true
   become: true
   when: ansible_facts.os_family == 'RedHat'
   tags: package_installation
@@ -36,7 +35,7 @@
   tags: package_installation
 
 # Cloning app
-- name: Add safe directories to Git configuration
+- name: setup_system | Add safe directories to Git configuration
   ansible.builtin.command:
     cmd: "git config --global --add safe.directory {{ app_path }}"
   become: true
