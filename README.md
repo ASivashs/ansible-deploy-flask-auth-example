@@ -27,6 +27,7 @@ This Ansible role deploys infrastructure for a [simple web application](https://
 
 * Ansible collections: **community.general**, **community.docker**.
 * Target server with **Debian/Ubuntu** or **Fedora/CentOS/RHEL**.
+* On **Fedora/CentOS/RHEL** you should disable **SELinux**.
 * On target server you should create user **devops** and provision SSH key access.
 
 ### Role Variables

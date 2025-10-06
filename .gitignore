@@ -3,4 +3,4 @@
 *.ini
 .ansible-lint
 inventory
-*.drawio.*
+*.drawio
