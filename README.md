@@ -1,38 +1,134 @@
-Role Name
+Ansible Role for deploying app in Debian or CentOS.
 =========
 
-A brief description of the role goes here.
+This Ansible role deploys infrastructure for a simple web application. It automates package installation, web server and reverse proxy configuration, a systemd service for the app, firewall, logging and logrotation, simple monitoring, cron tasks for health checks and backups, and an optional Docker Compose deployment mode.
 
-Requirements
+### Content
+
+- [Ansible Role for deploying app in Debian or CentOS.](#ansible-role-for-deploying-app-in-debian-or-centos)
+    - [Content](#content)
+    - [Architecture](#architecture)
+    - [Requirements](#requirements)
+    - [Role Variables](#role-variables)
+      - [flask-auth-example](#flask-auth-example)
+    - [Dependencies](#dependencies)
+    - [Example Playbook](#example-playbook)
+    - [How to use it](#how-to-use-it)
+    - [Tips and tricks](#tips-and-tricks)
+    - [TroubleShooting](#troubleshooting)
+    - [License](#license)
+
+### Architecture
+
+![flask-app-architecture](flask-app-architecture.png)
+
+### Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+* Ansible collections: **community.general**, **community.docker**.
+* Target server with **Debian/Ubuntu** or **Fedora/CentOS/RHEL**.
+* On target server you should create user **devops** and provision SSH key access.
 
-Role Variables
+### Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+#### flask-auth-example
 
-Dependencies
+```yml
+user:               string  # default 'devops'
+user_group:         string  # default 'devops'
+repo:               string  # default is app url
+app_name:           string  # default 'flask-auth-example'
+app_path:           string  # default '/srv'
+host_name:          string  # default 'test.local'
+requirements_path:  string  # default $app_path/requirements.txt
+venv_path:          string  # default '$app_path/venv'
+log_dir:            string  # default '/var/log/auth_server'
+```
+
+### Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Requires Ansible >= 2.8
 
-Example Playbook
+### Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Example host file:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```sh
+[targets]
+localhost ansible_ssh_host=8.8.8.8 ansible_user=root ansible_ssh_private_key_file=~/.ssh/id_rsa
+```
 
-License
+Example playbook:
+
+```yml
+- hosts: all
+  become: true
+  roles:
+    - flask-auth-example
+  vars:
+    docker: false
+```
+
+### How to use it
+----------------
+
+```sh
+ansible-playbook -i [HOST_FILE] [PLAYBOOK]
+ansible-playbook -i test-host playbook.yml --key-file=test-ssh/id_rsa --tags="package_install" --check
+```
+
+### Tips and tricks
+----------------
+
+Running a playbook in dry-run mode or check for bad syntax
+
+```sh
+--check
+--syntax-check
+```
+
+A list of tasks/hosts to complete for ansible playbook
+
+```sh
+--list-tasks
+--list-hosts
+```
+
+Ansible tags
+
+```sh
+--skip-tags "docker"
+--tags="nginx_setup"
+```
+
+Use another keys
+
+```sh
+--key-file=test-ssh/id_rsa
+```
+
+Verbose mode
+
+```sh
+-v    # log level 1
+-vvvv # log level 4
+```
+
+
+### TroubleShooting
+----------------
+
+When running jobs the returned output does not format carriage returns and newline characters (\r\n & \n).
+This could be fixed to return cleaner output like the standard command module.
+
+```sh
+ansible-playbook [........] |  sed 's/\\n/\n/g'
+```
+
+### License
 -------
 
 BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
