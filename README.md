@@ -1,7 +1,7 @@
 Ansible Role for deploying app in Debian or CentOS.
 =========
 
-This Ansible role deploys infrastructure for a simple web application. It automates package installation, web server and reverse proxy configuration, a systemd service for the app, firewall, logging and logrotation, simple monitoring, cron tasks for health checks and backups, and an optional Docker Compose deployment mode.
+This Ansible role deploys infrastructure for a [simple web application](https://github.com/riad-azz/flask-auth-example). It automates package installation, web server and reverse proxy configuration, a systemd service for the app, firewall, logging and logrotation, simple monitoring, cron tasks for health checks and backups, and an optional Docker Compose deployment mode.
 
 ### Content
 
