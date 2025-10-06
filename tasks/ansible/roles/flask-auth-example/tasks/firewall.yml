@@ -1,0 +1,49 @@
+---
+
+# Debian
+- name: firewall | Enable UFW
+  ansible.builtin.systemd:
+    state: started
+    name: ufw
+  when: ansible_facts.os_family == 'Debian'
+  tags: firewall_setup
+
+- name: firewall | UFW setup
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop: "{{ allowed_ports }}"
+  become: true
+  when: ansible_facts.os_family == 'Debian'
+  tags: firewall_setup
+
+- name: firewall | Enable UFW
+  community.general.ufw:
+    state: enabled
+    logging: true
+  become: true
+  when: ansible_facts.os_family == 'Debian'
+  tags: firewall_setup
+
+# Red Hat
+- name: firewall | Enable firewalld
+  ansible.builtin.systemd:
+    name: firewalld
+    state: started
+    enabled: true
+  when: ansible_facts.os_family == 'RedHat'
+  tags: firewall_setup
+
+- name: firewall | Firewalld setup
+  ansible.builtin.firewalld:
+    zone: public
+    port: "{{ item }}/tcp"
+    permanent: true
+    immediate: true
+    state: enabled
+  loop: "{{ allowed_ports }}"
+  become: true
+  notify: handlers | main | Restart firewalld
+  when: ansible_facts.os_family == 'RedHat'
+  tags: firewall_setup
