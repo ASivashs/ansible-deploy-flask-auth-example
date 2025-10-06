@@ -24,3 +24,8 @@
   ansible.builtin.systemd:
     name: docker
     state: restarted
+
+- name: handlers | main | Restart firewalld
+  ansible.builtin.systemd:
+    name: firewalld
+    state: restarted

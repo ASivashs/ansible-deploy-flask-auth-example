@@ -12,27 +12,5 @@
   ansible.builtin.import_tasks: docker_app.yml
   when: docker
 
-- name: Enable UFW
-  ansible.builtin.systemd:
-    state: started
-    name: ufw
-  when: ansible_facts.os_family == 'Debian'
-  tags: firewall_setup
-
-- name: UFW setup
-  community.general.ufw:
-    rule: allow
-    port: "{{ item }}"
-    proto: tcp
-  loop: "{{ allowed_ports }}"
-  become: true
-  when: ansible_facts.os_family == 'Debian'
-  tags: firewall_setup
-
-- name: Enable UFW
-  community.general.ufw:
-    state: enabled
-    logging: true
-  become: true
-  when: ansible_facts.os_family == 'Debian'
-  tags: firewall_setup
+- name: Enable firewall
+  ansible.builtin.import_tasks: firewall.yml
