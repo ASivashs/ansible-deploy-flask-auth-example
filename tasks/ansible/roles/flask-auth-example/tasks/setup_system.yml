@@ -1,28 +1,12 @@
 ---
 
 # Installing required apps
-- name: setup_system | Update Debian local repos
-  ansible.builtin.apt:
-    update_cache: true
-    force: true
-  become: true
-  when: ansible_facts.os_family == 'Debian'
-  tags: package_installation
 
 - name: setup_system | Update Red Hat local repos
   ansible.builtin.dnf:
     update_cache: true
   become: true
   when: ansible_facts.os_family == 'RedHat'
-  tags: package_installation
-
-- name: setup_system | Install dependencies on Debian
-  ansible.builtin.apt:
-    name: "{{ packages_map[ansible_facts.os_family] }}"
-    state: present
-    update_cache: true
-  become: true
-  when: ansible_facts.os_family == 'Debian'
   tags: package_installation
 
 - name: setup_system | Install dependencies on Red Hat
@@ -32,6 +16,23 @@
     update_cache: true
   become: true
   when: ansible_facts.os_family == 'RedHat'
+  tags: package_installation
+
+- name: setup_system | Update Debian local repos
+  ansible.builtin.apt:
+    update_cache: true
+    force: true
+  become: true
+  when: ansible_facts.os_family == 'Debian'
+  tags: package_installation
+
+- name: setup_system | Install dependencies on Debian
+  ansible.builtin.apt:
+    name: "{{ packages_map[ansible_facts.os_family] }}"
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_facts.os_family == 'Debian'
   tags: package_installation
 
 # Cloning app

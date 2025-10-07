@@ -18,7 +18,6 @@ EOF
 detect_os() {
     local os_id 
     if [[ -r /etc/os-release ]]; then
-        # shellcheck source=/dev/null
         . /etc/os-release
         os_id="$ID"
     else
@@ -27,21 +26,15 @@ detect_os() {
     fi
 
     case "$os_id" in 
-        ubuntu | debian)
+        ubuntu|debian)
             REPO_UPDATE="apt-get update"
             PACKAGE_INSTALL="apt-get install"
             PACKAGE_CHECK="dpkg -s"
             SPECIFIC_PACKAGES=( python3-venv )
         ;;
-        centos | rhel)
+        centos|rhel|fedora)
             REPO_UPDATE='yum makecache fast'
             PACKAGE_INSTALL='yum install -y'
-            PACKAGE_CHECK='rpm -q'
-            SPECIFIC_PACKAGES=( python3-virtualenv )
-        ;;
-        fedora)
-            REPO_UPDATE='dnf makecache fast'
-            PACKAGE_INSTALL='dnf install -y'
             PACKAGE_CHECK='rpm -q'
             SPECIFIC_PACKAGES=( python3-virtualenv )
         ;;

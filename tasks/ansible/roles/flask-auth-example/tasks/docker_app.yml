@@ -100,6 +100,7 @@
   when: ansible_facts.os_family == 'RedHat'
   tags: docker_installation
 
+# Setup containers
 - name: docker_app | Enable docker
   ansible.builtin.systemd:
     name: docker
@@ -107,7 +108,6 @@
     enabled: true
   tags: docker_installation
 
-# Setup containers
 - name: docker_app | Setup Dockerfile
   ansible.builtin.template:
     src: "Dockerfile.j2"
