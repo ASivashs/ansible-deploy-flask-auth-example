@@ -1,6 +1,6 @@
 #!/bin/bash
 # Installing distro-specific packages on Debian-based or Red Hat-based distros.
-# Usage: ./dependence.sh (with root)
+# Usage: ./dependence.sh (with root) # dependency or dependencies
 
 set -eu
 
@@ -60,3 +60,5 @@ for pkg in "${PACKAGES[@]}"; do
         echo "$pkg is already installed. Nothing to do."
     fi
 done
+
+# why not just "$PACKAGE_INSTALL git curl python3 python3-pip wget ufw $SPECIFIC_PACKAGE"

@@ -1,7 +1,10 @@
-Ansible Role for deploying app in Debian or CentOS.
+# Ansible Role for deploying app in Debian or CentOS.
 =========
 
-This Ansible role deploys infrastructure for a [simple web application](https://github.com/riad-azz/flask-auth-example). It automates package installation, web server and reverse proxy configuration, a systemd service for the app, firewall, logging and logrotation, simple monitoring, cron tasks for health checks and backups, and an optional Docker Compose deployment mode.
+This Ansible role deploys infrastructure for a [simple web application](https://github.com/riad-azz/flask-auth-example).
+It automates package installation, web server and reverse proxy configuration, a systemd service for the app, firewall,
+logging and logrotation, simple monitoring, cron tasks for health checks and backups, and an optional Docker Compose
+deployment mode.
 
 ### Content
 
@@ -10,7 +13,7 @@ This Ansible role deploys infrastructure for a [simple web application](https://
     - [Architecture](#architecture)
     - [Requirements](#requirements)
     - [Role Variables](#role-variables)
-      - [flask-auth-example](#flask-auth-example)
+        - [flask-auth-example](#flask-auth-example)
     - [Dependencies](#dependencies)
     - [Example Playbook](#example-playbook)
     - [How to use it](#how-to-use-it)
@@ -23,6 +26,7 @@ This Ansible role deploys infrastructure for a [simple web application](https://
 ![flask-app-architecture](flask-app-architecture.png)
 
 ### Requirements
+
 ------------
 
 * Ansible collections: **community.general**, **community.docker**.
@@ -31,6 +35,7 @@ This Ansible role deploys infrastructure for a [simple web application](https://
 * On target server you should create user **devops** and provision **SSH** key access.
 
 ### Role Variables
+
 --------------
 
 #### flask-auth-example
@@ -45,13 +50,18 @@ host_name:          string  # default 'test.local'
 requirements_path:  string  # default $app_path/requirements.txt
 venv_path:          string  # default '$app_path/venv'
 log_dir:            string  # default '/var/log/auth_server'
+#where is docker var?
 ```
 
 ### Dependencies
+
 ------------
 
-Requires Ansible >= 2.8
+[//]: # (this might be placed in requirements section)
 
+Requires Ansible >= 2.8 
+
+[//]: # (if those line breaks are placed next line, you have those headers as plain text, like here)
 ### Example Playbook
 ----------------
 
@@ -70,7 +80,7 @@ Example playbook:
   roles:
     - flask-auth-example
   vars:
-    docker: false
+    docker: false # there it is
 ```
 
 ### How to use it
@@ -117,7 +127,6 @@ Verbose mode
 -v    # log level 1
 -vvvv # log level 4
 ```
-
 
 ### TroubleShooting
 ----------------

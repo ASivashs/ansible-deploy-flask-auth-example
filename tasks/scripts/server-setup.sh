@@ -30,7 +30,7 @@ sudo firewall-cmd --reload
 
 
 # SSH key setup
-
+# these are not even commands
 /etc/ssh/sshd_config
 
 PasswordAuthentication no

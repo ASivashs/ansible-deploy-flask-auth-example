@@ -17,7 +17,7 @@ log() {
     echo "[$ts] [$level] $msg" >> "$LOG_FILE"
 }
 
-separator="-------------------------------------------"
+separator="-------------------------------------------" # where is it used?
 
 echo "[$LOG_TIME] Uptime: $(uptime)" >> $LOG_FILE
 echo "[$LOG_TIME] Partitions usage: $(shift)$(df -h)$(shift)" >> $LOG_FILE
