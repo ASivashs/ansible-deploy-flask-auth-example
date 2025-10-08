@@ -38,7 +38,7 @@
 - name: system_app | Check venv
   ansible.builtin.stat:
     path: "{{ venv_path }}/bin/activate"
-  register: venv_exist
+  register: venv_exist # where is it used?
   tags: app_setup
 
 - name: system_app | Create venv

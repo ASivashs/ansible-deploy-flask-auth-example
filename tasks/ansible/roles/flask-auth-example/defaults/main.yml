@@ -2,7 +2,7 @@
 # defaults file for flask-auth-example
 
 # User
-user: "devops"
+user: "devops" # if this configurable, devops user should not be a requirement for server, as was written in README.md
 user_group: "devops"
 
 # App

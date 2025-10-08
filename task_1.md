@@ -1,3 +1,4 @@
+[//]: # (this document is for you to read, not to include in the repository, need to remove it before submission)
 # 1. Администрирование сервера
 
 ## Общая цель

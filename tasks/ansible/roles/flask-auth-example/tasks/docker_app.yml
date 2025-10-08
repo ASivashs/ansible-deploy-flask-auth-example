@@ -132,7 +132,7 @@
     mode: "0755"
   tags: setup_docker
 
-- name: docker_app | Stop app containers
+- name: docker_app | Stop app containers # why stopping before running?
   community.docker.docker_compose_v2:
     project_src: "{{ app_path }}"
     state: stopped
@@ -150,3 +150,6 @@
     - "{{ app_path }}/docker-compose.yml"
   become: true
   tags: setup_docker
+
+# would docker-compose run if server would be restarted?
+# maybe add a systemd service to ensure docker-compose is always up?

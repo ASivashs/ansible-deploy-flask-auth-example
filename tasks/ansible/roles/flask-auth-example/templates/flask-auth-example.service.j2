@@ -3,7 +3,7 @@ Description=Flask authentication app
 After=network.target
 
 [Service]
-User=root
+User=root # better be devops
 
 WorkingDirectory={{ app_path }}
 ExecStart={{ venv_path }}/bin/python3 main.py

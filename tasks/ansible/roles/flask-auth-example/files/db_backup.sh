@@ -20,7 +20,7 @@ DATABASE_LOCATION="$1"
 BACKUP_LOCATION="$2"
 
 
-usage(){
+usage(){ # where is this used?
     cat <<EOF >&2
 Usage: $SCRIPT_NAME <file_location> <backup_directory>
     <file_location>    - location of file for backup.

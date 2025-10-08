@@ -50,7 +50,7 @@ REQUIREMENTS="${3:-0}"
 if [[ ! -f "$RUNFILE" ]]; then
     error "Python flask app running file '$RUNFILE' not found."
 else
-    log "INFO" "Python flask app running file '$RUNFILE' successfully found."
+    log "INFO" "Python flask app running file '$RUNFILE' successfully found." # duplicate info prefix?
 fi
 
 
