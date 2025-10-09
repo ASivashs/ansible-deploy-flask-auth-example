@@ -1,10 +1,6 @@
 ---
 # defaults file for flask-auth-example
 
-# User
-user: "devops"
-user_group: "devops"
-
 # App
 repo: "https://github.com/riad-azz/flask-auth-example"
 app_name: "flask-auth-example"

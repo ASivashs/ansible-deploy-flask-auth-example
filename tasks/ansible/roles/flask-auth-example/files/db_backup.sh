@@ -1,5 +1,5 @@
 #!/bin/bash
-# Backup file with time and date and time prefix in backuped file name.
+# Backup file with time and date and time prefix in backed up file name.
 # Usage: ./db_backup.sh <file_location> <backup_directory>
 
 set -eu
@@ -45,12 +45,12 @@ backup_database() {
 
     if [[ ! -f "$DATABASE_LOCATION" ]]; then
         log "ERROR" "Database not found at \"$DATABASE_LOCATION\"."
-        return 0
+        exit 1
     fi
 
     mkdir -p "$BACKUP_LOCATION"
     cp "$DATABASE_LOCATION" "$new_backup_path"
-    log "INFO" "Database backuped to \"$new_backup_path\"."
+    log "INFO" "Database backed up to \"$new_backup_path\"."
 }
 
 

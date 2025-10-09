@@ -132,21 +132,27 @@
     mode: "0755"
   tags: setup_docker
 
-- name: docker_app | Stop app containers
-  community.docker.docker_compose_v2:
-    project_src: "{{ app_path }}"
-    state: stopped
-    files:
-    - "{{ app_path }}/docker-compose.yml"
-  become: true
+- name: docker_app | Set up docker compose service
+  ansible.builtin.template:
+    src: "flask-auth-example-docker.service.j2"
+    dest: "/etc/systemd/system/flask-auth-example-docker.service"
+    owner: root
+    mode: "0755"
   tags: setup_docker
 
-- name: docker_app | Run app images
-  community.docker.docker_compose_v2:
-    project_src: "{{ app_path }}"
-    build: always
-    state: present
-    files:
-    - "{{ app_path }}/docker-compose.yml"
-  become: true
+- name: docker_app | Start app docker compose service
+  ansible.builtin.systemd:
+    name: "flask-auth-example-docker.service"
+    state: started
+    enabled: true
   tags: setup_docker
+
+# - name: docker_app | Run app images
+#   community.docker.docker_compose_v2:
+#     project_src: "{{ app_path }}"
+#     build: always
+#     state: present
+#     files:
+#     - "{{ app_path }}/docker-compose.yml"
+#   become: true
+#   tags: setup_docker

@@ -1,5 +1,5 @@
 server {
-        listen 80 default_server;
+        listen 80;
         server_name {{ host_name }} www.{{ host_name }};
 
         access_log /var/log/nginx/auth_server.access.log;
@@ -14,12 +14,13 @@ server {
                 proxy_set_header        X-Forwarded-Proto       $scheme;
                 proxy_set_header        X-Forwarded-Host        $server_name;
 
-                proxy_set_header   Upgrade           $http_upgrade;
-                proxy_set_header   Connection        "upgrade";
+                proxy_set_header        Upgrade           $http_upgrade;
+                proxy_set_header        Connection        "upgrade";
         }
 
         location /static/ {
-                alias /home/devops/flask-app/flask-auth-example/static/;
+                alias {% if docker %}/app/static/{% else %}/srv/static{% endif %};
                 add_header Cache-Control "public, immutable";
         }
+
 }

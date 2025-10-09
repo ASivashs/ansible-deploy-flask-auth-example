@@ -1,7 +1,11 @@
-Ansible Role for deploying app in Debian or CentOS.
+# Ansible Role for deploying app in Debian or CentOS.
+
 =========
 
-This Ansible role deploys infrastructure for a [simple web application](https://github.com/riad-azz/flask-auth-example). It automates package installation, web server and reverse proxy configuration, a systemd service for the app, firewall, logging and logrotation, simple monitoring, cron tasks for health checks and backups, and an optional Docker Compose deployment mode.
+This Ansible role deploys infrastructure for a [simple web application](https://github.com/riad-azz/flask-auth-example).
+It automates package installation, web server and reverse proxy configuration, a systemd service for the app, firewall,
+logging and logrotation, simple monitoring, cron tasks for health checks and backups, and an optional Docker Compose
+deployment mode.
 
 ### Content
 
@@ -23,6 +27,7 @@ This Ansible role deploys infrastructure for a [simple web application](https://
 ![flask-app-architecture](flask-app-architecture.png)
 
 ### Requirements
+
 ------------
 
 * Ansible collections: **community.general**, **community.docker**.
@@ -31,28 +36,36 @@ This Ansible role deploys infrastructure for a [simple web application](https://
 * On target server you should create user **devops** and provision **SSH** key access.
 
 ### Role Variables
+
 --------------
 
 #### flask-auth-example
 
 ```yml
-user:               string  # default 'devops'
-user_group:         string  # default 'devops'
-repo:               string  # default is app url
-app_name:           string  # default 'flask-auth-example'
-app_path:           string  # default '/srv'
-host_name:          string  # default 'test.local'
-requirements_path:  string  # default $app_path/requirements.txt
-venv_path:          string  # default '$app_path/venv'
-log_dir:            string  # default '/var/log/auth_server'
+user:                 string  # default 'devops'
+user_group:           string  # default 'devops'
+repo:                 string  # default is app url
+app_name:             string  # default 'flask-auth-example'
+app_path:             string  # default '/srv'
+host_name:            string  # default 'test.local'
+requirements_path:    string  # default $app_path/requirements.txt
+venv_path:            string  # default '$app_path/venv'
+log_dir:              string  # default '/var/log/auth_server'
+docker:               boolean # default false
+packages_map:         map     
+nginx_packages_map:   map
+docker_packages_map:  map
+allowed_ports:        list
 ```
 
 ### Dependencies
+
 ------------
 
 Requires Ansible >= 2.8
 
 ### Example Playbook
+
 ----------------
 
 Example host file:
@@ -74,6 +87,7 @@ Example playbook:
 ```
 
 ### How to use it
+
 ----------------
 
 ```sh
@@ -82,6 +96,7 @@ ansible-playbook -i test-host playbook.yml --key-file=test-ssh/id_rsa --tags="pa
 ```
 
 ### Tips and tricks
+
 ----------------
 
 Running a playbook in dry-run mode or check for bad syntax
@@ -118,8 +133,8 @@ Verbose mode
 -vvvv # log level 4
 ```
 
-
 ### TroubleShooting
+
 ----------------
 
 When running jobs the returned output does not format carriage returns and newline characters (\r\n & \n).
@@ -130,6 +145,7 @@ ansible-playbook [........] |  sed 's/\\n/\n/g'
 ```
 
 ### License
+
 -------
 
 BSD

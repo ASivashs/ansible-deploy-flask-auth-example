@@ -45,6 +45,7 @@
   ansible.builtin.command: "python3 -m venv {{ venv_path }}"
   args:
     creates: "{{ venv_path }}/bin/activate"
+  when: not venv_exist
   tags: app_setup
 
 - name: system_app | Install app python requirements

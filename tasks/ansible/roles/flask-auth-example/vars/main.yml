@@ -1,6 +1,11 @@
 ---
 # vars file for flask-auth-example
 
+# User
+user: "devops"
+user_group: "devops"
+
+# Packages
 packages_map:
   Debian:
     - git
@@ -51,6 +56,7 @@ docker_packages_map:
     - lvm2
     - gnupg2
 
+# Ports
 allowed_ports:
   - 22
   - 80

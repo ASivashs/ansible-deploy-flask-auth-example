@@ -1,6 +1,6 @@
 #!/bin/bash
 # Installing distro-specific packages on Debian-based or Red Hat-based distros.
-# Usage: ./dependence.sh (with root)
+# Usage: ./dependencies.sh (with root)
 
 set -eu
 
@@ -50,13 +50,15 @@ detect_os
 
 $REPO_UPDATE
 
-PACKAGES+=( "${SPECIFIC_PACKAGES[@]}" )
+# PACKAGES+=( "${SPECIFIC_PACKAGES[@]}" )
 
-for pkg in "${PACKAGES[@]}"; do
-    if ! $PACKAGE_CHECK "$pkg" &> /dev/null; then
-        echo "Installing: $pkg"
-        $PACKAGE_INSTALL "$pkg"
-    else
-        echo "$pkg is already installed. Nothing to do."
-    fi
-done
+$PACKAGE_INSTALL $PACKAGES $SPECIFIC_PACKAGES
+
+# for pkg in "${PACKAGES[@]}"; do
+#     if ! $PACKAGE_CHECK "$pkg" &> /dev/null; then
+#         echo "Installing: $pkg"
+#         $PACKAGE_INSTALL "$pkg"
+#     else
+#         echo "$pkg is already installed. Nothing to do."
+#     fi
+# done

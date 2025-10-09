@@ -1,12 +1,12 @@
 [Unit]
-Description=Flask authentication app
+Description=Flask authentication app docker compose
 After=network.target
 
 [Service]
 User={{ user }}
 
-WorkingDirectory={{ app_path }}
-ExecStart={{ venv_path }}/bin/python3 main.py
+WorkingDirectory=/srv
+ExecStart=/bin/bash -c "docker compose -f /srv/docker-compose.yml up"
 
 Restart=always
 RestartSec=5

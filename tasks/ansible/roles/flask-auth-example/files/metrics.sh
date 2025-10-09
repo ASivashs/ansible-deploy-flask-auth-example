@@ -17,8 +17,6 @@ log() {
     echo "[$ts] [$level] $msg" >> "$LOG_FILE"
 }
 
-separator="-------------------------------------------"
-
-echo "[$LOG_TIME] Uptime: $(uptime)" >> $LOG_FILE
-echo "[$LOG_TIME] Partitions usage: $(shift)$(df -h)$(shift)" >> $LOG_FILE
-echo "[$LOG_TIME] Processes: $(shift)$(top -b -n1 | head -n 20)$(shift)" >> $LOG_FILE
+log "INFO" "Uptime: $(uptime)"
+log "INFO" "Partitions usage: $(shift)$(df -h)$(shift)"
+log "INFO" "Processes: $(shift)$(top -b -n1 | head -n 20)$(shift)"
