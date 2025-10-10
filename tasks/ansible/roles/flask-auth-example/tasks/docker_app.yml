@@ -146,13 +146,3 @@
     state: started
     enabled: true
   tags: setup_docker
-
-# - name: docker_app | Run app images
-#   community.docker.docker_compose_v2:
-#     project_src: "{{ app_path }}"
-#     build: always
-#     state: present
-#     files:
-#     - "{{ app_path }}/docker-compose.yml"
-#   become: true
-#   tags: setup_docker
